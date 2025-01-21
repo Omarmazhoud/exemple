@@ -1,2 +1,134 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from './navigation'; // Assurez-vous que le chemin est correct
+
+type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
+
+interface Props {
+  navigation: LoginScreenNavigationProp;
+}
+
+const Login: React.FC<Props> = ({ navigation }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = () => {
+    // Logique de connexion ici
+    console.log('Email:', email, 'Password:', password);
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Login</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+      />
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
+      <Text style={styles.forgotPassword} onPress={() => navigation.navigate('ForgotPassword')}>
+        Forgot Password?
+      </Text>
+
+      {/* Cercles pour les options de connexion en dessous */}
+      <View style={styles.socialLoginContainer}>
+        <TouchableOpacity style={styles.circle}>
+          <Image source={require('.assets/Facebook.png')} style={styles.icon} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.circle}>
+          <Image source={require('./assets/apple.png')} style={styles.icon} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.circle}>
+          <Image source={require('./assets/Google.png')} style={styles.icon} />
+        </TouchableOpacity>
+      </View>
+
+      {/* Phrase d'inscription en bas de la page */}
+      <Text style={styles.signupPrompt}>
+        Vous n'avez pas un compte ? 
+        <Text style={styles.signupLink} onPress={() => navigation.navigate('SignUp')}>
+          Inscription
+        </Text>
+      </Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#fff',
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 20,
+  },
+  input: {
+    width: '100%',
+    padding: 10,
+    marginVertical: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+  },
+  button: {
+    backgroundColor: '#007BFF',
+    padding: 15,
+    borderRadius: 5,
+    width: '100%',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+  forgotPassword: {
+    marginTop: 10,
+    color: '#007BFF',
+    textDecorationLine: 'underline',
+  },
+  socialLoginContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+    marginTop: 20,
+  },
+  circle: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#f0f0f0',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  icon: {
+    width: 24,
+    height: 24,
+  },
+  signupPrompt: {
+    marginTop: 20,
+    fontSize: 16,
+  },
+  signupLink: {
+    color: '#007BFF',
+    textDecorationLine: 'underline',
+  },
+});
+
+export default Login;
